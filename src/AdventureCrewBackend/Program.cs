@@ -10,34 +10,18 @@ namespace AdventureCrewBackend
         public static void Main(string[] args)
         {
             var app = new App();
-            new AdventureCrewBackendStack(app, "AdventureCrewBackendStack", new StackProps
-            {
-                // If you don't specify 'env', this stack will be environment-agnostic.
-                // Account/Region-dependent features and context lookups will not work,
-                // but a single synthesized template can be deployed anywhere.
+            var domainName = "buyck.dev";
+            var hostingStack = new HostingStack(app, "AdventureCrewHostingStack", domainName);
+            new WebsiteStack(app, "AdventureCrewWebsiteStack", hostingStack.HostedZone, hostingStack.Certificate);
+            var dataStack = new DataStack(app, "AdventureCrewDataStack");
+            new ApiStack(app, "AdventureCrewApiStack", hostingStack.Certificate, hostingStack.HostedZone, dataStack.MileMarkersTable, dataStack.BooksTable);
 
-                // Uncomment the next block to specialize this stack for the AWS Account
-                // and Region that are implied by the current CLI configuration.
-                /*
-                Env = new Amazon.CDK.Environment
-                {
-                    Account = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT"),
-                    Region = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION"),
-                }
-                */
+            // TODO update GetMileMarker Lambda to return milemarker nearest the specified date.
 
-                // Uncomment the next block if you know exactly what Account and Region you
-                // want to deploy the stack to.
-                /*
-                Env = new Amazon.CDK.Environment
-                {
-                    Account = "123456789012",
-                    Region = "us-east-1",
-                }
-                */
+            // TODO -> S3 custom resource that contains raw Adventure Crew book data.
+            // Bootstrap Lambda function that runs only once after deployment -> gets files from S3 and inserts them into database.
 
-                // For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-            });
+
             app.Synth();
         }
     }
