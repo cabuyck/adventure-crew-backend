@@ -1,3 +1,4 @@
+using AdventureCrewBackend.Common.DatabaseModels;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.Lambda.APIGatewayEvents;
@@ -63,58 +64,5 @@ public class Function
                 { "Access-Control-Allow-Origin", "*" }
             }
         };
-    }
-
-    public class MileMarkerDateMapping
-    {
-        [DynamoDBHashKey("date")]
-        public string Date { get; set; } = string.Empty;
-        public int BookId { get; set; }
-        public int BookMileMarkerId { get; set; }
-    }
-
-    public class Book
-    {
-        [DynamoDBHashKey("id")]
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string IntroText { get; set; } = string.Empty;
-        public string SideTripTitle { get; set; } = string.Empty;
-        public IEnumerable<string> SideTripParagraphs { get; set; } = Enumerable.Empty<string>();
-        public IEnumerable<string> SideTripQuestions { get; set; } = Enumerable.Empty<string>();
-        public IEnumerable<string> SideTripActivities { get; set; } = Enumerable.Empty<string>();
-        public IEnumerable<MileMarker> MileMarkers { get; set; }
-        public IEnumerable<Review> Reviews { get; set; }
-    }
-
-    [DynamoDBTable("MileMarkers")]
-    public class MileMarker
-    {
-        [DynamoDBHashKey("bookId")]
-        public int BookId { get; set; } // the id of the book containing this mile marker
-        [DynamoDBRangeKey("bookMileMarkerId")]
-        public int BookMileMarkerId { get; set; } // the id of this milemarker within the containing book
-        [DynamoDBProperty("introTitle")]
-        public string IntroTitle { get; set; } = string.Empty;
-        [DynamoDBProperty("intoText")]
-        public string IntroText { get; set; } = string.Empty;
-        [DynamoDBProperty("mileMarkerReference")]
-        public string MileMarkerReference { get; set; } = string.Empty;
-        [DynamoDBProperty("extraMileReference")]
-        public string ExtraMileReference { get; set; } = string.Empty;
-        [DynamoDBProperty("magnifyingGlassTitle")]
-        public string MagnifyingGlassTitle { get; set; } = string.Empty;
-        [DynamoDBProperty("magnifyingGlassText")]
-        public string MagnifyingGlassText { get; set; } = string.Empty;
-    }
-
-    public class Review
-    {
-        [DynamoDBHashKey("date")]
-        public int BookId { get; set; }
-        [DynamoDBRangeKey("bookReviewId")]
-        public int BookReviewId { get; set; } // sort key // the id of the review within the book
-        public string Text { get; set; } = string.Empty;
-        public IEnumerable<string> Questions { get; set; } = Enumerable.Empty<string>();
     }
 }

@@ -1,3 +1,4 @@
+using AdventureCrewBackend.Common.DatabaseModels;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using System.Net;
@@ -44,17 +45,5 @@ public class Function
                 { "Access-Control-Allow-Origin", "*" }
             }
         };
-    }
-
-    public class MileMarker
-    {
-        public int BookId { get; set; } // the id of the book containing this mile marker
-        public int BookMileMarkerId { get; set; } // the id of this milemarker within the containing book
-        public string IntroTitle { get; set; } = string.Empty;
-        public string IntroText { get; set; } = string.Empty;
-        public string MileMarkerReference { get; set; } = string.Empty;
-        public string ExtraMileReference { get; set; } = string.Empty;
-        public string MagnifyingGlassTitle { get; set; } = string.Empty;
-        public string MagnifyingGlassText { get; set; } = string.Empty;
     }
 }

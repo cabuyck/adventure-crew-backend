@@ -10,11 +10,11 @@ namespace AdventureCrewBackend
         public static void Main(string[] args)
         {
             var app = new App();
-            var domainName = "buyck.dev";
+            var domainName = "adventurecrewonline.com";
             var hostingStack = new HostingStack(app, "AdventureCrewHostingStack", domainName);
-            new WebsiteStack(app, "AdventureCrewWebsiteStack", hostingStack.HostedZone, hostingStack.Certificate);
+            new WebsiteStack(app, "AdventureCrewWebsiteStack", hostingStack.HostedZoneId, hostingStack.HostedZoneName, hostingStack.CertificateArn);
             var dataStack = new DataStack(app, "AdventureCrewDataStack");
-            new ApiStack(app, "AdventureCrewApiStack", hostingStack.Certificate, hostingStack.HostedZone, dataStack.MileMarkersTable, dataStack.BooksTable);
+            new ApiStack(app, "AdventureCrewApiStack", hostingStack.CertificateArn, hostingStack.HostedZoneId, hostingStack.HostedZoneName, dataStack.MileMarkersTable, dataStack.ReviewsTable, dataStack.BooksTable);
 
             // TODO update GetMileMarker Lambda to return milemarker nearest the specified date.
 

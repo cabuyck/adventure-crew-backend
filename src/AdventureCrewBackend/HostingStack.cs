@@ -9,8 +9,9 @@ namespace AdventureCrewBackend
 {
     public class HostingStack : Stack
     {
-        public HostedZone HostedZone;
-        public Certificate Certificate;
+        public string HostedZoneName;
+        public string HostedZoneId;
+        public string CertificateArn;
 
         /// <summary>
         /// 
@@ -28,12 +29,14 @@ namespace AdventureCrewBackend
 
             var certificate = new Certificate(this, "Certificate", new CertificateProps
             {
-                DomainName = string.Join("", "*.", domainName),
+                DomainName = domainName,
+                SubjectAlternativeNames = new string[] { string.Join("", "*.", domainName) },
                 Validation = CertificateValidation.FromDns(hostedZone),
             });
 
-            HostedZone = hostedZone;
-            Certificate = certificate;
+            HostedZoneName = hostedZone.ZoneName;
+            HostedZoneId = hostedZone.HostedZoneId;
+            CertificateArn = certificate.CertificateArn;
         }
     }
 }

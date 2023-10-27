@@ -12,5 +12,5 @@
   "function-runtime": "dotnet6",
   "function-memory-size": 256,
   "function-timeout": 30,
-  "function-handler": "AdventureCrewBackend.Functions.GetDebugMileMarker::AdventureCrewBackend.Functions.GetDebugMileMarker.Function::FunctionHandler"
+  "function-handler": "AdventureCrewBackend.Functions.GetBook::AdventureCrewBackend.Functions.GetBook.Function::FunctionHandler"
 }
